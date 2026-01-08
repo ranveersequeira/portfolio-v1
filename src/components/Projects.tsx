@@ -5,6 +5,13 @@ import { Button } from "@/components/ui/button";
 const Projects = () => {
     const projects = [
         {
+    title: "ai-agent-workflow",
+    description: "An NPM tool that standardizes AI tool usage into a structured team of specialist agent personas and enforces a disciplined development workflow using engineered process prompts and rules.",
+    link: "https://www.npmjs.com/package/ai-agent-workflow",
+    tags: ["npm", "ai", "workflow", "agents", "tooling"],
+    }
+,
+        {
             title: "react-analyzer",
             description: "An NPM tool to help onboard and understand the tech stack of any React ecosystem project by analyzing dependencies, tooling, and configurations.",
             link: "https://www.npmjs.com/package/@ranveersequeira/react-analyzer",
