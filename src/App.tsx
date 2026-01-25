@@ -10,7 +10,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 function App() {
   return (
     <BrowserRouter>
-      <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+      <ThemeProvider defaultTheme="tokyo-night" storageKey="portfolio-theme">
         <Layout>
           <Routes>
             <Route path="/" element={<Home />} />

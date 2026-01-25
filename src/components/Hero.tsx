@@ -3,27 +3,29 @@ import { Link } from "react-router-dom";
 
 const Hero = () => {
     return (
-        <section className="py-20 space-y-8">
+        <section className="py-12 sm:py-20 space-y-8">
             <div className="space-y-2">
-                <h1 className="text-4xl font-bold tracking-tight sm:text-6xl text-primary">
+                <h1 className="text-3xl sm:text-4xl lg:text-6xl font-bold tracking-tight text-primary">
                     Ranveer Sequeira
                 </h1>
-                <p className="text-xl text-muted-foreground">
-                    Software Developer.
+                <p className="text-lg sm:text-xl text-muted-foreground font-mono">
+                    <span className="text-accent">$</span> Problem Solver · AI Tooling · Developer Experience
                 </p>
             </div>
 
-        <div className="max-w-2xl text-lg leading-relaxed text-foreground/80">
-  <p>
-    I'm a terminal-first software engineer who believes the mouse is optional. I spend my days building scalable systems and clean web UIs with <strong>React</strong>, <strong>Next.js</strong>, and <strong>TypeScript</strong>, all from a tightly tuned <strong>Neovim (LazyVim)</strong> + <strong>tmux</strong> workflow inside <strong>Ghostty</strong> on macOS.
-  </p>
-  <p className="mt-4">
-    When I’m not shipping features or optimizing performance, I’m designing <strong>AI agent workflows</strong>, refining developer tooling, or refactoring code that was already working—just to make it simpler, faster, and more maintainable.
-  </p>
-</div>
+            <div className="max-w-2xl text-base sm:text-lg leading-relaxed text-foreground/80 space-y-4">
+                <p>
+                    I'm a <strong className="text-primary">terminal-centric engineer</strong> who builds tools that make developers more effective. Not a framework specialist—a <strong className="text-accent">problem solver</strong> who happens to work in the JavaScript ecosystem.
+                </p>
+                <p>
+                    Currently at <strong className="text-primary">Ixigo</strong>, solving complex frontend challenges at scale. My obsession is <strong className="text-accent">AI-augmented development</strong>—designing workflows where AI agents amplify developer capabilities, not replace them.
+                </p>
+                <p>
+                    Author of <strong className="text-primary">ai-agent-workflow</strong>—an npm tool for structured AI tool usage with specialist agent personas. I ship, iterate, and refine. High agency, minimal friction, maximum impact.
+                </p>
+            </div>
 
-
-            <div className="flex gap-4">
+            <div className="flex flex-col sm:flex-row gap-4">
                 <Button asChild variant="default" className="bg-primary text-primary-foreground hover:bg-primary/90">
                     <Link to="/projects">View Projects</Link>
                 </Button>

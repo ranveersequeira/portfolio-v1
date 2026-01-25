@@ -1,21 +1,22 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { ExternalLink, Star } from "lucide-react";
 
 const Projects = () => {
     const projects = [
         {
-    title: "ai-agent-workflow",
-    description: "An NPM tool that standardizes AI tool usage into a structured team of specialist agent personas and enforces a disciplined development workflow using engineered process prompts and rules.",
-    link: "https://www.npmjs.com/package/ai-agent-workflow",
-    tags: ["npm", "ai", "workflow", "agents", "tooling"],
-    }
-,
+            title: "ai-agent-workflow",
+            description: "An NPM tool that standardizes AI tool usage into a structured team of specialist agent personas and enforces a disciplined development workflow using engineered process prompts and rules.",
+            link: "https://www.npmjs.com/package/ai-agent-workflow",
+            tags: ["npm", "ai", "workflow", "agents", "dx"],
+            featured: true,
+        },
         {
             title: "react-analyzer",
             description: "An NPM tool to help onboard and understand the tech stack of any React ecosystem project by analyzing dependencies, tooling, and configurations.",
             link: "https://www.npmjs.com/package/@ranveersequeira/react-analyzer",
-            tags: ["npm", "tooling", "react"],
+            tags: ["npm", "tooling", "react", "dx"],
         },
         {
             title: "vite-sane-cli",
@@ -56,11 +57,21 @@ const Projects = () => {
             </h2>
             <div className="grid gap-6 md:grid-cols-2">
                 {projects.map((project, index) => (
-                    <Card key={index} className="bg-card border-border flex flex-col hover:border-primary/50 transition-colors">
+                    <Card 
+                        key={index} 
+                        className={`bg-card border-border flex flex-col transition-colors ${
+                            project.featured 
+                                ? "border-primary/50 md:col-span-2 hover:border-primary" 
+                                : "hover:border-primary/50"
+                        }`}
+                    >
                         <CardHeader>
-                            <CardTitle className="text-xl font-bold text-primary">
-                                {project.title}
-                            </CardTitle>
+                            <div className="flex items-start justify-between gap-2">
+                                <CardTitle className="text-xl font-bold text-primary flex items-center gap-2">
+                                    {project.featured && <Star className="h-4 w-4 text-accent fill-accent" />}
+                                    {project.title}
+                                </CardTitle>
+                            </div>
                             <div className="flex flex-wrap gap-2 mt-2">
                                 {project.tags.map((tag) => (
                                     <Badge key={tag} variant="secondary" className="text-xs font-mono">
@@ -75,7 +86,8 @@ const Projects = () => {
                             </CardDescription>
                             <div className="mt-auto pt-4">
                                 <Button asChild variant="outline" size="sm" className="w-full border-primary/50 hover:bg-primary/10 text-primary">
-                                    <a href={project.link} target="_blank" rel="noopener noreferrer">
+                                    <a href={project.link} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">
+                                        <ExternalLink className="h-4 w-4" />
                                         View Project
                                     </a>
                                 </Button>

@@ -4,11 +4,17 @@ import { Badge } from "@/components/ui/badge";
 const Experience = () => {
     const experiences = [
         {
+            company: "Ixigo",
+            role: "Software Engineer II",
+            date: "Jan 2026 — Present",
+            link: "https://www.ixigo.com/",
+            current: true,
+        },
+        {
             company: "Devkraft Technologies",
             role: "Software Developer (Frontend)",
-            date: "Sept 2023 — Present",
+            date: "Sept 2023 — Dec 2025",
             link: "https://www.devkraft.co.in/",
-            current: true,
         },
         {
             company: "Devkraft Technologies",
@@ -33,7 +39,7 @@ const Experience = () => {
                 {experiences.map((exp, index) => (
                     <Card key={index} className="bg-card/50 border-border hover:border-primary/50 transition-colors">
                         <CardHeader className="pb-2">
-                            <div className="flex justify-between items-start">
+                            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-2">
                                 <div>
                                     <CardTitle className="text-lg font-bold text-foreground">
                                         {exp.role}
@@ -47,7 +53,7 @@ const Experience = () => {
                                         @{exp.company}
                                     </a>
                                 </div>
-                                <Badge variant={exp.current ? "default" : "secondary"} className="font-mono text-xs">
+                                <Badge variant={exp.current ? "default" : "secondary"} className="font-mono text-xs w-fit">
                                     {exp.date}
                                 </Badge>
                             </div>
