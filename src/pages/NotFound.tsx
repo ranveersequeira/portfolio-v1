@@ -1,23 +1,29 @@
+import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
+import CascadeText from "@/components/CascadeText";
+import PretextLines from "@/components/PretextLines";
 
-const NotFound = () => {
-    return (
-        <div className="min-h-screen bg-destructive/10 flex flex-col items-center justify-center p-4 text-center space-y-6 font-mono">
-            <div className="space-y-2">
-                <h1 className="text-6xl font-bold text-destructive">404</h1>
-                <h2 className="text-2xl font-bold text-foreground">KERNEL PANIC</h2>
-            </div>
-            <p className="text-muted-foreground max-w-md">
-                Fatal exception: Page not found at memory address {window.location.pathname}
-                <br />
-                System halted.
-            </p>
-            <Button asChild variant="default" className="bg-primary text-primary-foreground">
-                <Link to="/">Reboot System (Go Home)</Link>
-            </Button>
-        </div>
-    );
-};
-
-export default NotFound;
+export default function NotFound() {
+  return (
+    <div className="page-stack">
+      <section className="not-found-shell">
+        <div className="section-kicker">404</div>
+        <CascadeText
+          as="h1"
+          className="page-title max-w-4xl"
+          text="This route never made it through the interface review."
+        />
+        <PretextLines
+          as="p"
+          bodyClassName="section-copy"
+          className="max-w-2xl"
+          text={`No page is mapped to ${window.location.pathname}. The clean move is to head back to the portfolio and continue from there.`}
+        />
+        <Link className="primary-action" to="/">
+          Return home
+          <ArrowRight size={17} />
+        </Link>
+      </section>
+    </div>
+  );
+}
