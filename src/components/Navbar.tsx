@@ -7,12 +7,8 @@ import { Button } from "@/components/ui/button";
 
 const Navbar = () => {
     const location = useLocation();
-    const [isOpen, setIsOpen] = useState(false);
-
-    // Close menu when route changes
-    useEffect(() => {
-        setIsOpen(false);
-    }, [location.pathname]);
+    const [openPath, setOpenPath] = useState<string | null>(null);
+    const isOpen = openPath === location.pathname;
 
     // Prevent scroll when menu is open
     useEffect(() => {
@@ -29,9 +25,14 @@ const Navbar = () => {
     const links = [
         { href: "/", label: "~/home" },
         { href: "/projects", label: "~/projects" },
+        { href: "/blogs", label: "~/blogs" },
         { href: "/about", label: "~/about" },
         { href: "/contact", label: "~/contact" },
     ];
+
+    const isActiveLink = (href: string) => {
+        return href === "/" ? location.pathname === href : location.pathname.startsWith(href);
+    };
 
     return (
         <>
@@ -51,7 +52,7 @@ const Navbar = () => {
                                 to={link.href}
                                 className={cn(
                                     "transition-colors hover:text-primary",
-                                    location.pathname === link.href 
+                                    isActiveLink(link.href)
                                         ? "text-primary" 
                                         : "text-muted-foreground"
                                 )}
@@ -68,7 +69,7 @@ const Navbar = () => {
                         <Button
                             variant="ghost"
                             size="icon"
-                            onClick={() => setIsOpen(!isOpen)}
+                            onClick={() => setOpenPath(isOpen ? null : location.pathname)}
                             aria-label="Toggle menu"
                         >
                             {isOpen ? (
@@ -87,7 +88,7 @@ const Navbar = () => {
                     {/* Backdrop */}
                     <div 
                         className="fixed inset-0 z-[100] bg-black/60 md:hidden"
-                        onClick={() => setIsOpen(false)}
+                        onClick={() => setOpenPath(null)}
                         aria-hidden="true"
                     />
                     
@@ -99,7 +100,7 @@ const Navbar = () => {
                             <Button
                                 variant="ghost"
                                 size="icon"
-                                onClick={() => setIsOpen(false)}
+                                onClick={() => setOpenPath(null)}
                                 aria-label="Close menu"
                             >
                                 <X className="h-5 w-5" />
@@ -112,10 +113,10 @@ const Navbar = () => {
                                 <Link
                                     key={link.href}
                                     to={link.href}
-                                    onClick={() => setIsOpen(false)}
+                                    onClick={() => setOpenPath(null)}
                                     className={cn(
                                         "text-lg font-mono py-3 px-4 rounded-md transition-all",
-                                        location.pathname === link.href
+                                        isActiveLink(link.href)
                                             ? "text-primary bg-primary/10 border-l-2 border-primary"
                                             : "text-foreground hover:text-primary hover:bg-muted"
                                     )}
