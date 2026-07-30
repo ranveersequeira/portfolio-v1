@@ -10,7 +10,7 @@ import {
 } from "lucide-react";
 import "./FoodPlanner.css";
 
-const STORAGE_KEY = "lean-meal-planner-v1";
+const STORAGE_KEY = "lean-meal-planner-v2";
 
 type GroceryGroup = {
   title: string;
@@ -43,55 +43,60 @@ type PlannerState = {
 
 const groceryGroups: GroceryGroup[] = [
   {
-    title: "Protein",
+    title: "Dairy & protein",
     items: [
-      ["Eggs", "72–84"],
-      ["Paneer", "2 kg"],
-      ["Tofu", "1.5 kg"],
-      ["Thick curd / Greek yogurt", "5 kg"],
-      ["Milk", "10 L"],
-      ["Soy chunks", "1 kg"],
-      ["Mixed dals", "2 kg"],
-      ["Rajma", "600 g"],
-      ["Chickpeas", "600 g"],
-      ["Roasted chana", "750 g"],
+      ["Eggs", "42–48"],
+      ["Paneer", "1.5 kg"],
+      ["Dahi / curd", "3 kg"],
+      ["Milk", "7 L"],
+      ["Soy chunks", "750 g"],
+      ["Mixed dals", "1.5 kg"],
+      ["Rajma", "500 g"],
+      ["Kabuli chana", "500 g"],
+      ["Kala chana", "500 g"],
+      ["Roasted chana", "500 g"],
     ],
   },
   {
-    title: "Carbs & staples",
+    title: "Grains & staples",
     items: [
       ["Atta", "4 kg"],
       ["Rice", "3 kg"],
-      ["Oats", "1.25 kg"],
-      ["Whole-wheat bread", "3 loaves"],
+      ["Poha", "750 g"],
+      ["Suji / daliya", "750 g"],
       ["Besan", "750 g"],
-      ["Idli batter", "1 kg"],
+      ["Idli / dosa batter", "1.5 kg"],
+      ["Whole-wheat bread", "2 loaves"],
     ],
   },
   {
-    title: "Produce",
+    title: "Vegetables & fruit",
     items: [
       ["Onion", "2 kg"],
       ["Tomato", "2 kg"],
+      ["Potato", "1.5 kg"],
       ["Cucumber", "1.5 kg"],
-      ["Carrot", "1 kg"],
+      ["Carrot / beetroot", "1 kg"],
       ["Capsicum", "750 g"],
-      ["Leafy greens", "1.5 kg"],
-      ["Mixed vegetables", "4 kg"],
+      ["Palak / methi", "1.5 kg"],
+      ["Seasonal vegetables", "5 kg"],
       ["Bananas", "18"],
-      ["Apples / guava / oranges", "18"],
-      ["Papaya", "1 large"],
-      ["Lemon, ginger, garlic", "1 set"],
+      ["Seasonal fruit", "18 pieces"],
+      ["Lemon, chilli & coriander", "1 weekly set"],
+      ["Ginger & garlic", "500 g"],
     ],
   },
   {
-    title: "Snacks",
+    title: "Kitchen & snacks",
     items: [
       ["Peanuts", "500 g"],
-      ["Almonds", "300 g"],
       ["Makhana", "300 g"],
-      ["Chia / flaxseed", "250 g"],
+      ["Fresh sprouts", "1 kg"],
       ["Buttermilk", "3 L"],
+      ["Cooking oil", "1 L"],
+      ["Ghee", "250 g"],
+      ["Jeera, rai & hing", "1 refill set"],
+      ["Haldi, mirch & dhania powder", "1 refill set"],
     ],
   },
 ];
@@ -99,50 +104,218 @@ const groceryGroups: GroceryGroup[] = [
 const mealWeeks: MealWeek[] = [
   {
     name: "Week 1",
-    focus: "Balanced start",
+    focus: "Ghar ka balanced",
     days: [
-      ["Monday", "Vegetable omelette, whole-wheat toast and fruit", "Rajma rice, cucumber salad and thick curd", "Roasted chana and buttermilk", "Paneer bhurji, rotis and mixed vegetables", "100–115 g"],
-      ["Tuesday", "Overnight oats with milk, curd, chia and banana", "Soy-chunk pulao with vegetable raita", "Two boiled eggs per adult", "Palak tofu with rotis", "100–120 g"],
-      ["Wednesday", "Besan chilla stuffed with paneer", "Chole, rotis, salad and curd", "Greek yogurt with fruit", "Egg curry, vegetables and rice", "105–120 g"],
-      ["Thursday", "Tofu sandwich and milk", "Moong-dal khichdi with soy and curd", "Sprouts chaat with boiled egg", "Tofu stir-fry with rice", "100–115 g"],
-      ["Friday", "Egg bhurji rolls", "Paneer rice bowl with vegetables", "Roasted chana, fruit and milk", "Mixed dal, rotis and sabzi", "100–115 g"],
-      ["Saturday", "Savoury oats with eggs", "Soy keema, rotis and raita", "Curd with chia seeds", "Paneer tikka and sautéed vegetables", "105–125 g"],
+      [
+        "Monday",
+        "Vegetable poha with two boiled eggs and fruit",
+        "Rajma chawal, cucumber-onion salad and dahi",
+        "Roasted chana and chaas",
+        "Paneer bhurji, rotis and bhindi sabzi",
+        "95–110 g",
+      ],
+      [
+        "Tuesday",
+        "Vegetable upma with dahi and peanuts",
+        "Arhar dal, rice, aloo-beans sabzi and salad",
+        "Two masala boiled eggs per adult",
+        "Soy-chunk masala, rotis and kachumber",
+        "95–115 g",
+      ],
+      [
+        "Wednesday",
+        "Besan chilla stuffed with paneer and green chutney",
+        "Chole, jeera rice, salad and dahi",
+        "Seasonal fruit with a glass of milk",
+        "Egg curry, rotis and lauki-chana dal",
+        "100–115 g",
+      ],
+      [
+        "Thursday",
+        "Idli, sambar and one boiled egg per adult",
+        "Moong-dal khichdi, dahi, papad and salad",
+        "Sprouts chaat with lemon",
+        "Palak paneer and rotis",
+        "95–110 g",
+      ],
+      [
+        "Friday",
+        "Egg bhurji, two rotis and fruit",
+        "Masoor dal, rice, seasonal sabzi and dahi",
+        "Peanuts, banana and chaas",
+        "Soy keema, rotis and cucumber raita",
+        "95–110 g",
+      ],
+      [
+        "Saturday",
+        "Masala dosa, sambar and egg podimas",
+        "Kadhi chawal with kala-chana salad",
+        "Roasted makhana and milk",
+        "Matar paneer, rotis and carrot-beet salad",
+        "100–115 g",
+      ],
     ],
   },
   {
     name: "Week 2",
-    focus: "Higher-fibre week",
+    focus: "Dal & seasonal sabzi",
     days: [
-      ["Monday", "Moong dal chilla with paneer filling", "Egg pulao with raita and salad", "Apple with thick curd", "Tofu curry, rotis and beans", "100–115 g"],
-      ["Tuesday", "Masala oats with three eggs", "Rajma quinoa or rice bowl", "Roasted chana and buttermilk", "Soy chunk masala with rotis", "100–120 g"],
-      ["Wednesday", "Greek-yogurt oats with fruit", "Paneer tikka wrap and salad", "Two boiled eggs", "Dal palak, rice and curd", "100–115 g"],
-      ["Thursday", "Egg and paneer sandwich", "Chole rice bowl with cucumber", "Sprouts and lemon", "Tofu bhurji with rotis", "105–120 g"],
-      ["Friday", "Besan omelette with curd", "Soy vegetable biryani and raita", "Milk and peanuts", "Egg curry with sautéed vegetables", "100–115 g"],
-      ["Saturday", "Idli, sambar and boiled eggs", "Paneer pulao with salad", "Fruit yogurt bowl", "Mixed lentil soup and tofu salad", "100–115 g"],
+      [
+        "Monday",
+        "Moong-dal chilla with paneer filling and chutney",
+        "Egg pulao, boondi raita and salad",
+        "Guava or apple with roasted chana",
+        "Mixed dal, rotis and gobhi-matar sabzi",
+        "95–110 g",
+      ],
+      [
+        "Tuesday",
+        "Vegetable daliya with two boiled eggs",
+        "Rajma chawal, dahi and onion salad",
+        "Chaas and masala peanuts",
+        "Soy-chunk curry, rotis and beans sabzi",
+        "100–115 g",
+      ],
+      [
+        "Wednesday",
+        "Paneer paratha with dahi and fruit",
+        "Chana dal, rice and lauki-tomato sabzi",
+        "Two boiled eggs with chaat masala",
+        "Palak egg curry and rotis",
+        "95–110 g",
+      ],
+      [
+        "Thursday",
+        "Vegetable uttapam, sambar and coconut chutney",
+        "Chole, rotis, cucumber salad and dahi",
+        "Sprouts bhel with lemon",
+        "Paneer-capsicum masala and rotis",
+        "95–110 g",
+      ],
+      [
+        "Friday",
+        "Besan vegetable chilla with dahi",
+        "Soy vegetable pulao and cucumber raita",
+        "Banana, milk and peanuts",
+        "Egg masala, rice and sautéed seasonal greens",
+        "100–115 g",
+      ],
+      [
+        "Saturday",
+        "Idli, sambar and two boiled eggs",
+        "Moong dal, rice, bhindi and salad",
+        "Fruit dahi with roasted makhana",
+        "Paneer tikka, rotis and mixed-vegetable soup",
+        "100–115 g",
+      ],
     ],
   },
   {
     name: "Week 3",
-    focus: "Meal-prep friendly",
+    focus: "Quick family cooking",
     days: [
-      ["Monday", "Overnight oats with yogurt and seeds", "Soy keema rice bowl", "Boiled eggs and fruit", "Paneer curry with rotis", "100–120 g"],
-      ["Tuesday", "Egg bhurji toast", "Dal, rice, vegetables and curd", "Roasted chana", "Tofu tikka bowl", "100–115 g"],
-      ["Wednesday", "Paneer besan chilla", "Rajma wrap with salad", "Greek yogurt", "Egg fried rice with vegetables", "105–120 g"],
-      ["Thursday", "Savoury oats with tofu scramble", "Chole and rotis", "Buttermilk and peanuts", "Soy chunk curry with rice", "100–115 g"],
-      ["Friday", "Three-egg vegetable omelette", "Paneer bhurji rice bowl", "Fruit and curd", "Moong dal, tofu and vegetables", "105–120 g"],
-      ["Saturday", "Idli, sambar and eggs", "Egg biryani and raita", "Makhana and milk", "Light paneer salad with soup", "100–115 g"],
+      [
+        "Monday",
+        "Leftover-roti egg roll with onion and chutney",
+        "Soy keema, rice and cucumber raita",
+        "Boiled eggs and seasonal fruit",
+        "Everyday paneer curry, rotis and salad",
+        "100–115 g",
+      ],
+      [
+        "Tuesday",
+        "Egg bhurji with whole-wheat toast and milk",
+        "Dal tadka, rice, cabbage-peas sabzi and dahi",
+        "Roasted chana and chaas",
+        "Kala-chana masala, rotis and kachumber",
+        "95–110 g",
+      ],
+      [
+        "Wednesday",
+        "Paneer-besan chilla with coriander chutney",
+        "Rajma chawal and carrot-cucumber salad",
+        "Dahi, banana and peanuts",
+        "Vegetable egg pulao and raita",
+        "100–115 g",
+      ],
+      [
+        "Thursday",
+        "Poha with sprouts, peanuts and lemon",
+        "Chole, rotis, salad and dahi",
+        "Milk and roasted makhana",
+        "Soy-chunk curry, rice and beans sabzi",
+        "95–110 g",
+      ],
+      [
+        "Friday",
+        "Three-egg masala omelette with rotis",
+        "Paneer bhurji, rice and mixed-vegetable salad",
+        "Fruit, dahi and roasted chana",
+        "Moong dal, rotis and seasonal sabzi",
+        "100–115 g",
+      ],
+      [
+        "Saturday",
+        "Idli upma with sambar and boiled eggs",
+        "Homestyle egg biryani and onion raita",
+        "Chaas and masala peanuts",
+        "Light paneer-do-pyaza, rotis and soup",
+        "100–115 g",
+      ],
     ],
   },
   {
     name: "Week 4",
-    focus: "Variety & repeatability",
+    focus: "Regional favourites",
     days: [
-      ["Monday", "Egg-paneer breakfast wrap", "Soy pulao and raita", "Greek yogurt and banana", "Dal tadka, rotis and vegetables", "105–120 g"],
-      ["Tuesday", "Oats, milk, yogurt and chia", "Paneer tikka rice bowl", "Two boiled eggs", "Tofu palak with rotis", "100–115 g"],
-      ["Wednesday", "Besan chilla and curd", "Rajma rice and salad", "Roasted chana and fruit", "Egg curry and vegetables", "100–115 g"],
-      ["Thursday", "Tofu scramble sandwich", "Chole, rotis and curd", "Milk and peanuts", "Soy keema stuffed rotis", "100–115 g"],
-      ["Friday", "Masala omelette and toast", "Moong khichdi with paneer", "Sprouts chaat", "Tofu stir-fry and rice", "105–120 g"],
-      ["Saturday", "Savoury oats with eggs", "Paneer pulao and raita", "Curd, fruit and seeds", "Mixed dal soup with egg salad", "100–115 g"],
+      [
+        "Monday",
+        "Egg-paneer frankie in homemade rotis",
+        "Soy pulao, raita and tomato-cucumber salad",
+        "Dahi, banana and roasted chana",
+        "Dal tadka, rotis and aloo-gobhi",
+        "100–115 g",
+      ],
+      [
+        "Tuesday",
+        "Vegetable poha with boiled eggs and lemon",
+        "Paneer tikka, jeera rice and green salad",
+        "Chaas and masala peanuts",
+        "Palak chana, rotis and dahi",
+        "95–110 g",
+      ],
+      [
+        "Wednesday",
+        "Besan chilla, dahi and coriander chutney",
+        "Rajma chawal and kachumber salad",
+        "Seasonal fruit and milk",
+        "Dhaba-style egg curry, rotis and beans sabzi",
+        "100–115 g",
+      ],
+      [
+        "Thursday",
+        "Suji cheela with paneer and vegetables",
+        "Chole, rotis, onion salad and dahi",
+        "Sprouts chaat with lemon",
+        "Soy keema stuffed parathas and raita",
+        "100–115 g",
+      ],
+      [
+        "Friday",
+        "Masala omelette, rotis and fruit",
+        "Moong-dal khichdi with paneer, dahi and papad",
+        "Roasted makhana and chaas",
+        "Sambar rice with egg podimas and poriyal",
+        "100–115 g",
+      ],
+      [
+        "Saturday",
+        "Vegetable dosa, sambar and boiled eggs",
+        "Paneer pulao, cucumber raita and salad",
+        "Dahi, fruit and peanuts",
+        "Mixed-dal soup, egg chaat and rotis",
+        "100–115 g",
+      ],
     ],
   },
 ];
@@ -331,16 +504,18 @@ function FoodPlanner() {
       <main className="food-app">
         <header className="food-header">
           <div className="food-intro">
-            <p className="food-eyebrow">3 adults · Eggetarian · No chicken</p>
+            <p className="food-eyebrow">
+              3 adults · Indian eggetarian home · No chicken
+            </p>
             <h1>
               Eat well.
               <br />
               Stay consistent.
             </h1>
             <p className="food-subtitle">
-              A four-week lean-mass meal system. Daily meals appear first on
-              mobile, while the reusable grocery checklist stays collapsible
-              below.
+              A four-week Indian household meal system built around familiar
+              staples, seasonal sabzi and repeatable home cooking. Daily meals
+              appear first on mobile, with the weekly grocery list below.
             </p>
           </div>
 
